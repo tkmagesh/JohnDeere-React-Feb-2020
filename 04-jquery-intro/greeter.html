@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Greeter</title>
+    <script src="jquery-3.4.1.js"></script>
+    <script>
+        /* function onBtnGreetClick(){
+            
+            var userName = $('#txtUserName').val();
+            var greetMsg= 'Hi ' + userName + ', Have a nice day!';
+            $('#divMessage').text(greetMsg);
+        }
+        function init(){
+            $('#btnGreet').click(onBtnGreetClick);
+        }
+        //window.addEventListener('load', init);
+        //$(document).ready(init);
+        $(init); */
+
+        $(function(){
+            $('#btnGreet').click(function() {
+                var userName = $('#txtUserName').val();
+                var greetMsg = 'Hi ' + userName + ', Have a nice day!';
+                $('#divMessage').text(greetMsg);
+            });
+        })
+
+    </script>
+</head>
+<body>
+    <h1>Greeter</h1>
+    <hr>
+    <label for="">User Name :</label>
+    <input type="text" name="" id="txtUserName">
+    <input type="button" value="Greet" id="btnGreet">
+    <div id="divMessage">[Dummy Greet Message]</div>
+</body>
+</html>
