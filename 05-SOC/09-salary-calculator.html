@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Salary Calculator</title>
     <script src="jquery-3.4.1.js"></script>
+    <script src="handlebars-v4.7.3.js"></script>
     <style>
         body{
             margin-left: 50px;
@@ -36,13 +37,7 @@
                 tax : 0,
                 salary : 0
             };
-            var _subscribers = {
-                basic : [],
-                hra : [],
-                da : [],
-                tax : [],
-                salary : []
-            };
+            var _subscribers = [];
 
             this.get = function(attrName){
                 return _data[attrName];
@@ -50,15 +45,24 @@
             this.set = function(attrName, value){
                 if (_data[attrName] === value) return;
                 _data[attrName] = value;
-                var callbacks = _subscribers[attrName];
-                callbacks.forEach(function(callback){
+                _subscribers.forEach(function(callback){
                     if (typeof callback === 'function')
                         callback();
                 });
                 
             }
-            this.subscribe = function(attrName, callback){
-                _subscribers[attrName].push(callback);
+            this.subscribe = function(callback){
+                _subscribers.push(callback);
+            };
+
+            this.toJSON = function(){
+                return {
+                    basic : _data.basic,
+                    hra : _data.hra,
+                    da : _data.da,
+                    tax : _data.tax,
+                    salary : _data.salary
+                };
             }
         }
 
@@ -97,11 +101,11 @@
                     <table>
                         <tbody>
                             <tr>
-                                <td id="tdBasic">[Basic]</td>
-                                <td id="tdHra">[HRA]</td>
-                                <td id="tdDa">[DA]</td>
-                                <td id="tdTax">[Tax]</td>
-                                <td id="tdSalary">[Salary]</td>
+                                <td id="tdBasic">{{basic}}</td>
+                                <td id="tdHra">{{hra}}</td>
+                                <td id="tdDa">{{da}}</td>
+                                <td id="tdTax">{{tax}}</td>
+                                <td id="tdSalary">{{salary}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -110,8 +114,12 @@
             
             var $viewEl = this.$viewEl = $('<div></div>');
 
+            var templateFn = Handlebars.compile(template);
+
             this.render = function(){
-                 $viewEl.html(template);
+                var data = model.toJSON();
+                var generatedHTML = templateFn(data);
+                 $viewEl.html(generatedHTML);
             };
 
             //behavior
@@ -137,25 +145,7 @@
             });
 
             //Reacting to Model changes
-            model.subscribe('salary', function(){
-                $('#tdSalary', $viewEl).text(model.get('salary'));
-            });
-
-            model.subscribe('basic', function(){
-                $('#tdBasic', $viewEl).text(model.get('basic'));
-            });
-
-            model.subscribe('hra', function () {
-                $('#tdHra', $viewEl).text(model.get('hra'));
-            });
-
-            model.subscribe('da', function () {
-                $('#tdDa', $viewEl).text(model.get('da'));
-            });
-
-            model.subscribe('tax', function () {
-                $('#tdTax', $viewEl).text(model.get('tax'));
-            });
+            model.subscribe(this.render);
         }
 
         $(function(){
