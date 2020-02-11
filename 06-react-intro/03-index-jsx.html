@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>React-Intro</title>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script src="babel.min.js"></script>
+    <script type="text/babel">
+        var counter = 0;
+        function init() {
+            var btnRender = document.getElementById('btnRender');
+            btnRender.addEventListener('click', onBtnRenderClick);
+        }
+        function onBtnRenderClick() {
+            ++counter;
+            document.getElementById('divCounter').innerText = counter;
+            var appEle = (
+                <div>
+                    <h1>Welcome To React.js</h1>
+                    <hr/>
+                        <div>
+                            <span>Counter : </span>
+                            <span>{counter}</span>
+                        </div>
+                        <div>
+                            <h3>Introduction</h3>
+                            <p>Qui reprehenderit ipsum nostrud eu aute anim esse do reprehenderit cillum elit qui consequat. Amet minim sunt sit ad elit ad consequat. Magna fugiat do dolor veniam labore quis pariatur id non minim sunt. Tempor incididunt ut ex quis mollit dolor qui qui ut id et reprehenderit. Labore commodo veniam nisi officia ex fugiat laboris duis nisi elit dolore fugiat. Eu tempor cillum esse velit ut magna.</p>
+                            <p>Duis laboris dolore sunt exercitation ex irure voluptate laboris officia non nulla. Proident cupidatat sunt excepteur labore ad magna velit ex velit fugiat occaecat. Esse irure ea ex officia non ut dolor dolor duis. Lorem excepteur minim ullamco culpa veniam minim id.</p>
+                            <p>In ea ut occaecat sit quis nisi tempor minim pariatur excepteur enim cupidatat excepteur. Et irure elit ullamco incididunt adipisicing consectetur excepteur sit. Commodo irure ea enim aliquip consectetur deserunt dolor veniam occaecat occaecat officia nostrud do irure. Ex adipisicing in commodo mollit enim aliquip dolore ut sint pariatur non commodo pariatur. Officia irure enim ea labore do esse enim quis aute commodo occaecat cupidatat in amet.</p>
+                        </div>
+                        <div>
+                            <h3>Advantages</h3>
+                            <ol>
+                                <li>Declarative</li>
+                                <li>Efficient</li>
+                            </ol>
+                        </div>
+                </div>
+            );
+            ReactDOM.render(appEle, document.getElementById('root'));
+        }
+        window.addEventListener('load', init);
+    </script>
+</head>
+
+<body>
+    <input type="button" value="Render" id="btnRender">
+    <div id="divCounter"></div>
+    <div id="root"></div>
+</body>
+
+</html>
