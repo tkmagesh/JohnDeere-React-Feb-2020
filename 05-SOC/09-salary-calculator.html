@@ -45,7 +45,7 @@
             this.set = function(attrName, value){
                 if (_data[attrName] === value) return;
                 _data[attrName] = value;
-                _subscribers.forEach(function(callback){
+                _subscribers.forEach(callback => {
                     if (typeof callback === 'function')
                         callback();
                 });
