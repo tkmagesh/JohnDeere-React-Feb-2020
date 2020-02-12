@@ -28,7 +28,7 @@
 
             onGreetClick = () => {
                 console.log('greet button clicked');
-                let newGreetMessage = `Hi ${this.state.userName}, Have a nice day!`;
+                let newGreetMessage = `Hi ${this.state.userName}, ${this.props.message}`;
                 this.setState({ greetMessage : newGreetMessage});
             }
 
@@ -47,7 +47,15 @@
                 )
             }
         }
-        ReactDOM.render(React.createElement(Greeter),
+        /* ReactDOM.render(React.createElement(Greeter, { message : 'Have a nice day!', xyz : 100}),
+            document.getElementById('root')); */
+        const value = 100;
+        ReactDOM.render(
+            <div>
+                <Greeter message="Have a nice day!" xyz={value} />
+                <hr/>
+                <Greeter message="Have a good day!" xyz={value} />
+            </div>,
             document.getElementById('root'));
     </script>
 </head>
