@@ -25,6 +25,12 @@
             padding-right: 10px;
             font-size: 18pt;
         }
+        .poorSalary {
+            color : red;
+        }
+        .goodSalary {
+            color : green;
+        }
     </style>
     <script type="text/babel">
          String.prototype.toInt = function(){
@@ -113,7 +119,7 @@
                         </div>
                         */}
                         <SalaryCalculatorInput labelText="Tax :" type="range" min="0" max="30" defaultValue="0" onValueChange={ value => model.set('tax', value) }/>
-                            
+
                         <div className="field">
                             <input type="button" value="Calculate" onClick={ () => model.calculate() } />
                         </div>
@@ -138,6 +144,7 @@
         class SalaryCalculatorResult extends React.Component{
             render = () => {
                 const { basic, hra, da, tax, salary } = this.props.data;
+                const salaryElement = salary < 10000 ? (<td className="poorSalary">{salary}</td>) : (<td className="goodSalary">{salary}</td>);
                 return(
                     <div className="field">
                         <table>
@@ -147,7 +154,7 @@
                                     <td>{hra}</td>
                                     <td>{da}</td>
                                     <td>{tax}</td>
-                                    <td>{salary}</td>
+                                    { salary <= 0 ? null : salaryElement }
                                 </tr>
                             </tbody>
                         </table>
