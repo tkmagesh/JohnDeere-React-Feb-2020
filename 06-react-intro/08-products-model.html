@@ -9,18 +9,40 @@
     <script src="react-dom.development.js"></script>
     <script src="babel.min.js"></script>
     <script type="text/babel">
+        class EventEmitter {
+            _subscribers = [];
+            subscribe = (callback) => {
+                this._subscribers.push(callback);
+            }
+            triggerChange = () => {
+                this._subscribers.forEach(callback => callback());
+            }
+        }
+
+        class ProductsModel extends EventEmitter{
+            _productNames = [];
+
+            getAll =() => {
+                return [...this._productNames];
+            }
+            addNew = (productName) => {
+                this._productNames.push(productName);
+                this.triggerChange();
+            }
+            getCount = () => this._productNames.length;
+        }
+
         class Products extends React.Component{
             state = {
-                newProductName : '',
-                productNames : []
+                newProductName : ''
             }
             onAddNewClick = () => {
-                const { newProductName, productNames } = this.state;
-                productNames.push(newProductName);
-                this.setState({productNames : productNames });
+                const { newProductName } = this.state;
+                const { model } = this.props;
+                model.addNew(newProductName);
             }
             render = () => {
-                const { productNames } = this.state;
+                const  productNames = this.props.model.getAll();
                 const productItems = productNames.map((productName, index) => (<li key={index}>{productName}</li>));
                 return(
                     <div>
@@ -34,19 +56,37 @@
                 )
             }
         }
+
+        class ProductsCount extends React.Component{
+            render = () => {
+                return (
+                    <div>
+                        <span>Count : </span>
+                        <span>{this.props.data}</span>
+                    </div>
+                );;
+            }
+        }
+
+        const model = new ProductsModel();
+
+        function renderApp(){
          ReactDOM.render(
              <div>
-                <ProductsCount />
+                <ProductsCount data={model.getCount()} />
                 <div>
                     <div>
                         <div>
-                            <Products/>
+                            <Products model={model}/>
                         </div>
                     </div>
                 </div>
             </div>
         ,
             document.getElementById('root')); 
+        }
+        renderApp();
+        model.subscribe(renderApp);
     </script>
 </head>
 <body>
