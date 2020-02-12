@@ -37,7 +37,9 @@
                 newProductName : ''
             }
             onAddNewClick = () => {
-                const { newProductName } = this.state;
+                //const { newProductName } = this.state;
+                const newProductName = this.state.newProductName;
+                
                 const { model } = this.props;
                 model.addNew(newProductName);
             }
