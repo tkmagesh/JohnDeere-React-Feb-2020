@@ -6,8 +6,56 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>State Manager</title>
     <script src="state-manager.js"></script>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script src="babel.min.js"></script>
+    <script type="text/babel">
+        function spinnerReducer(currentState = 0, action){
+            if (action.type && action.type === 'UP') return currentState + action.payload;
+            if (action.type && action.type === 'DOWN') return currentState - action.payload;
+            return currentState;
+        }
+
+        const store = StateManager.createStore(spinnerReducer);
+
+        class Spinner extends React.Component{
+            state = {
+                delta : 0
+            };
+            onDownClick = () => {
+                const action = { type : 'DOWN', payload : this.state.delta};
+                this.props.store.dispatch(action);
+            }
+            onUpClick = () => {
+                const action = { type : 'UP', payload : this.state.delta};
+                this.props.store.dispatch(action);
+            }
+            render = () => {
+                const { delta } = this.state;
+                const value = this.props.store.getState();
+                return(
+                    <div>
+                        <label>Delta :</label>
+                        <input type="number" value={delta} onChange={ evt => this.setState({ delta : evt.target.valueAsNumber })}/>
+                        <br/>
+                        <input type="button" value="DOWN" onClick={this.onDownClick}/>
+                        <span> [ {value} ] </span>
+                        <input type="button" value="UP" onClick={this.onUpClick}/>
+                    </div>
+                )
+            }
+        }
+
+        function renderApp(){
+            ReactDOM.render(<Spinner store={store}/>,
+                document.getElementById('root')
+            );
+        }
+        renderApp();
+        store.subscribe(renderApp);
+    </script>
 </head>
 <body>
-    
+    <div id="root"></div>
 </body>
 </html>
