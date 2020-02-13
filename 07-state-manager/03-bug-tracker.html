@@ -96,7 +96,7 @@
 
     const bugActionDispatchers = StateManager.bindActionCreators(bugActionCreators, appStore.dispatch);
 
-    class BugItem extends React.Component{
+    /* class BugItem extends React.Component{
         
         onBugNameClick = () => {
             const { bug, toggle } = this.props;
@@ -115,7 +115,18 @@
                 </li>
             )
         }
-    }
+    } */
+
+    const BugItem = ({bug, toggle}) => (
+        <li>
+            <span 
+                className={ 'bugname' + (bug.isClosed ? ' closed' : '')}
+                onClick = { () => toggle(bug)}
+            >
+                {bug.name}</span>
+            <div className="datetime">{bug.createdAt.toString()}</div>
+        </li>
+    );
 
     //Higher Order Component
     const BugStats = (props) => {
@@ -155,7 +166,7 @@
             <section className="edit">
                 <label htmlFor="">Bug Name :</label>
                 <input type="text" value={newBugName} onChange={ evt => setNewBugName(evt.target.value) } />
-                <input type="button" value="Add New" onClick={() => addNew(newBugName))}/>
+                <input type="button" value="Add New" onClick={() => addNew(newBugName)}/>
             </section>
         )
     }
