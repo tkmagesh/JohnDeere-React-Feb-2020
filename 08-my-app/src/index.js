@@ -11,17 +11,34 @@ import BugTracker from './bug-tracker';
 import Spinner from './spinner';
 
 import axios from 'axios';
-window['axios'] = axios;
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
 
+const Home = (...attrs) => {
+    console.log(attrs);
+    return (<h1>Home</h1>);
+};
 
 ReactDOM.render(
     <Provider store={appStore}>
         <div>
             <h1>My App</h1>
             <hr />
-            <Spinner/>
-            <hr />
-            <BugTracker></BugTracker>
+            <Router>
+                <div>
+                    <span> [ <Link to="/something">Home</Link> ] </span>
+                    <span> [ <Link to="/bugs">Bugs</Link> ] </span>
+                    <span> [ <Link to="/spinner">Spinner</Link> ] </span>
+                </div>
+                <hr/>
+                <Route path="/bugs" component={BugTracker}/>
+                <Route path="/spinner" component={Spinner}/>
+                <Route path="/:data" component={Home} exact/>
+            </Router>
         </div>
     </Provider>,
     document.getElementById('root')

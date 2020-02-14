@@ -50,7 +50,8 @@ import './index.css';
     }
 } */
 
-const BugTracker = ({ bugs, toggle, removeClosed, addNew, load, sort }) => {
+const BugTracker = ({ bugs, toggle, removeClosed, addNew, load, sort, ...attrs }) => {
+    
     const [sortAttrName, setSortAttrName] = React.useState('');
     const [sortDesc, setSortDesc] = React.useState(false);
 
@@ -62,6 +63,10 @@ const BugTracker = ({ bugs, toggle, removeClosed, addNew, load, sort }) => {
 
     React.useEffect(function(){
         load();
+        //following function will be executed when the component is unmounted
+        return function(){
+            
+        }
     }, []);
     return (
         <div>
