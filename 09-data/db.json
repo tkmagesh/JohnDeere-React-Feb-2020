@@ -1,16 +1,28 @@
 {
   "bugs": [
     {
-      "id": 4,
-      "name": "Server communication failure",
+      "id": 1,
+      "name": "Application not responding",
       "isClosed": false,
-      "createdAt": "2019-12-04T11:12:59.819Z"
+      "createdAt": "2020-02-14T09:40:51.472Z"
     },
     {
-      "id": 7,
+      "id": 2,
+      "name": "User actions not recognised",
+      "isClosed": true,
+      "createdAt": "2020-02-14T09:40:56.589Z"
+    },
+    {
+      "id": 3,
+      "name": "Server communication failure",
+      "isClosed": true,
+      "createdAt": "2020-02-14T09:41:01.996Z"
+    },
+    {
+      "id": 4,
       "name": "Data integrity checks failed",
       "isClosed": false,
-      "createdAt": "2020-02-14T09:28:16.781Z"
+      "createdAt": "2020-02-14T09:41:09.615Z"
     }
   ],
   "employees": [

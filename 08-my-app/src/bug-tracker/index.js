@@ -15,6 +15,9 @@ class BugTracker extends Component {
         sortDesc : false
     };
 
+    componentDidMount = () => {
+        this.props.load();
+    }
     onChangeSortAttr = (evt) => {
         this.setState({ sortAttrName : evt.target.value });
         this.props.sort(evt.target.value, this.state.sortDesc);
@@ -27,7 +30,7 @@ class BugTracker extends Component {
         const { bugs, toggle, removeClosed, addNew, load } = this.props;
         return (
             <div>
-                <input type="button" value="LOAD" onClick={load} />
+                {/* <input type="button" value="LOAD" onClick={load} /> */}
                 <BugStats bugs={bugs} />
                 <BugEdit addNew={addNew} />
                 <section>

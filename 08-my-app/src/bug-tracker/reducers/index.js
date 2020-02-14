@@ -26,6 +26,11 @@ function bugsReducer(currentState = defaultState, action) {
     if (action.type === 'LOAD_BUGS'){
         return { ...currentState, bugs : action.payload };
     }
+    if (action.type = 'REMOVE_ONE'){
+        const bugToRemove = action.payload;
+        const newState = { ...currentState, bugs: currentState.bugs.filter(existingBug => existingBug.id !== bugToRemove.id) };
+        return newState;
+    }
 
     return currentState;
 }
