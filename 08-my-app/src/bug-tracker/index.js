@@ -9,7 +9,7 @@ import BugEdit from './views/BugEdit';
 import BugList from './views/BugList';
 import './index.css';
 
-class BugTracker extends Component {
+/* class BugTracker extends Component {
     state = {
         sortAttrName : '',
         sortDesc : false
@@ -30,7 +30,7 @@ class BugTracker extends Component {
         const { bugs, toggle, removeClosed, addNew, load } = this.props;
         return (
             <div>
-                {/* <input type="button" value="LOAD" onClick={load} /> */}
+                
                 <BugStats bugs={bugs} />
                 <BugEdit addNew={addNew} />
                 <section>
@@ -48,6 +48,41 @@ class BugTracker extends Component {
             </div>
         )
     }
+} */
+
+const BugTracker = ({ bugs, toggle, removeClosed, addNew, load, sort }) => {
+    const [sortAttrName, setSortAttrName] = React.useState('');
+    const [sortDesc, setSortDesc] = React.useState(false);
+
+    const updateSort = (sortAttr, isDesc) => {
+        setSortAttrName(sortAttr);
+        setSortDesc(isDesc);
+        sort(sortAttrName, sortDesc);
+    }
+
+    React.useEffect(function(){
+        load();
+    }, []);
+    return (
+        <div>
+            {/* <input type="button" value="LOAD" onClick={load} /> */}
+            <BugStats bugs={bugs} />
+            <BugEdit addNew={addNew} />
+            <section>
+                <label htmlFor="">Order By :</label>
+                <select name="" id="" onChange={(evt) => updateSort(evt.target.value, sortDesc)}>
+                    <option value="id">Id</option>
+                    <option value="name">Name :</option>
+                    <option value="isClosed">Status</option>
+                    <option value="createdAt">Created</option>
+                </select>
+                <label htmlFor="">Descending :</label>
+                <input type="checkbox" onClick={(evt) => updateSort(sortAttrName, evt.target.checked)} />
+            </section>
+            <BugList {...{ bugs, toggle, removeClosed }} />
+        </div>
+    )
+    
 }
 
 function mapStateToProps(storeState){
