@@ -1,5 +1,5 @@
-import axios from 'axios';
-function getLocalBugs(){
+//import axios from 'axios';
+/* function getLocalBugs(){
     return [
         {
             id : 1,
@@ -14,10 +14,11 @@ function getLocalBugs(){
             createdAt: new Date(),
         }
     ]
-}
+} */
 //using the asyncMiddleware
-/* export function load(){
-    return function(dispatch){
+ /* export function load(){
+    return function(dispatch, getState){
+        console.log(arguments);
         //const bugs = getLocalBugs();
         var p = axios.get('http://localhost:3030/bugs')
         var p2= p.then(function(response){ 
@@ -30,8 +31,18 @@ function getLocalBugs(){
     }    
 } */
 
-//using the promiseMiddleware
+import bugApi from '../services/bugApi';
+
 export function load(){
+    return async function(dispatch, getState){
+        const bugs = await bugApi.getAll();
+        const action = { type: 'LOAD_BUGS', payload: bugs };
+        dispatch(action);
+    }
+}
+
+//using the promiseMiddleware
+/* export function load(){
     var p = axios.get('http://localhost:3030/bugs')
     var p2 = p.then(function (response) {
         return response.data;
@@ -41,4 +52,4 @@ export function load(){
         return action;
     });
     return p3;
-}
+} */

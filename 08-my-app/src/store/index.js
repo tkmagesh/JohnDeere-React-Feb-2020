@@ -1,6 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import bugsReducer from '../bug-tracker/reducers';
 import { spinnerReducer, filterReducer } from '../spinner/reducers';
+import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({
     bugsData : bugsReducer,
@@ -29,7 +30,7 @@ function asyncMiddleware(store){
     return function(next){
         return function(action){
             if (typeof action === 'function'){
-                return action(store.dispatch);
+                return action(next);
             } else {
                 return next(action);
             }
@@ -50,6 +51,6 @@ function promiseMiddleware(store){
         }
     }
 }
-const appStore = createStore(rootReducer, applyMiddleware(loggerMiddleware, asyncMiddleware, promiseMiddleware));
+const appStore = createStore(rootReducer, applyMiddleware(loggerMiddleware, thunk, promiseMiddleware));
 
 export default appStore;
