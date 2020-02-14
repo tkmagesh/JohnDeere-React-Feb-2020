@@ -23,6 +23,9 @@ function bugsReducer(currentState = defaultState, action) {
         const { attrName, isDesc } = action.payload;
         return { ...currentState, sortAttrName : attrName, sortDesc : isDesc };
     }
+    if (action.type === 'LOAD_BUGS'){
+        return { ...currentState, bugs : action.payload };
+    }
 
     return currentState;
 }

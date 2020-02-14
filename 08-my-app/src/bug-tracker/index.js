@@ -24,9 +24,10 @@ class BugTracker extends Component {
         this.props.sort(this.state.sortAttrName, evt.target.checked);
     }
     render = () => {
-        const { bugs, toggle, removeClosed, addNew } = this.props;
+        const { bugs, toggle, removeClosed, addNew, load } = this.props;
         return (
             <div>
+                <input type="button" value="LOAD" onClick={load} />
                 <BugStats bugs={bugs} />
                 <BugEdit addNew={addNew} />
                 <section>
