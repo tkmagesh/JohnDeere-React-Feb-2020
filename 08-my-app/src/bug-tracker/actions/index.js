@@ -10,8 +10,9 @@ export { removeClosed } from './removeClosed'
 import { addNew } from './addNew';
 import { toggle } from './toggle';
 import { removeClosed } from './removeClosed' 
+import { sort } from './sort';
 
-export default { addNew, toggle, removeClosed };
+export default { addNew, toggle, removeClosed, sort };
 
 //the above will be imported as
 // import bugActionCreators from './actions'

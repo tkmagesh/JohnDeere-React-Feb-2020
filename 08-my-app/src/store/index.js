@@ -1,10 +1,11 @@
 import { createStore, combineReducers } from 'redux';
 import bugsReducer from '../bug-tracker/reducers';
-import spinnerReducer from '../spinner/reducers';
+import { spinnerReducer, filterReducer } from '../spinner/reducers';
 
 const rootReducer = combineReducers({
     bugsData : bugsReducer,
-    spinnerData : spinnerReducer
+    spinnerData : spinnerReducer,
+    filterData : filterReducer
 });
 
 const appStore = createStore(rootReducer);

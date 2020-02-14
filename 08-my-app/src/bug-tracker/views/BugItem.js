@@ -7,6 +7,8 @@ const BugItem = ({ bug, toggle }) => (
         >
             {bug.name}</span>
         <div className="datetime">{bug.createdAt.toString()}</div>
+        <div>[ID : {bug.id}]</div>
+
     </li>
 );
 export default BugItem;

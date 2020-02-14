@@ -15,7 +15,7 @@ class Spinner extends Component {
     }
     render = () => {
         const { delta } = this.state;
-        const value = this.props.value;
+        const { value, applyFilter } = this.props;
         return (
             <div>
                 <label>Delta :</label>
@@ -24,6 +24,9 @@ class Spinner extends Component {
                 <input type="button" value="DOWN" onClick={this.onDownClick} />
                 <span> [ {value} ] </span>
                 <input type="button" value="UP" onClick={this.onUpClick} />
+                <br/>
+                <label>Apply Filter : </label>
+                <input type="checkbox" onClick={ evt => applyFilter(evt.target.checked) } />
             </div>
         )
     }
