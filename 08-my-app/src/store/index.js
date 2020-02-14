@@ -9,8 +9,9 @@ const rootReducer = combineReducers({
 });
 
 function loggerMiddleware(store){
-    return function(next){
-        return function(action){
+    return function loggerNext(next){
+        console.log('logger next -> ', next);
+        return function loggerAction(action){
             console.group(JSON.stringify(action));
             console.group('Before');
             console.log(store.getState());
@@ -23,6 +24,32 @@ function loggerMiddleware(store){
         }
     }
 }
-const appStore = createStore(rootReducer, applyMiddleware(loggerMiddleware));
+
+function asyncMiddleware(store){
+    return function(next){
+        return function(action){
+            if (typeof action === 'function'){
+                return action(store.dispatch);
+            } else {
+                return next(action);
+            }
+        }
+    }
+}
+
+function promiseMiddleware(store){
+    return function(next){
+        return function(action){
+            if (action instanceof Promise){
+                action.then(function(response){
+                    next(response);
+                });
+            }else {
+                return next(action)
+            }
+        }
+    }
+}
+const appStore = createStore(rootReducer, applyMiddleware(loggerMiddleware, asyncMiddleware, promiseMiddleware));
 
 export default appStore;
